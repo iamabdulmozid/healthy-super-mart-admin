@@ -15,7 +15,7 @@ export interface ApiError {
 
 class ApiClient {
   private client: AxiosInstance;
-  private baseURL = import.meta.env.VITE_API_BASE_URL || 'https://api.bangalianahalalfood.com/api/v1';
+  private baseURL = import.meta.env.VITE_API_BASE_URL || 'https://api.healthysupermart.com/api/v1';
 
   constructor() {
     this.client = axios.create({

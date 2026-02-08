@@ -44,7 +44,7 @@ Body:
 ```json
 {
   "key": "products/e3b1a02c-2928-4659-ab40-92277dd1ad88-rice.jpg",
-  "publicUrl": "https://cdn.bangalianahalalfood.com/products/e3b1a02c-2928-4659-ab40-92277dd1ad88-rice.jpg"
+  "publicUrl": "https://cdn.healthysupermart.com/products/e3b1a02c-2928-4659-ab40-92277dd1ad88-rice.jpg"
 }
 ```
 

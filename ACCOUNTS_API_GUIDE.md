@@ -9,7 +9,7 @@ http://localhost:3000/api/v1
 
 Production:
 ```
-https://api.bangalianahalalfood.com/api/v1
+https://api.healthysupermart.com/api/v1
 ```
 
 ---
@@ -388,7 +388,7 @@ The token is automatically handled by the `apiClient` service, which:
 - Detailed error messages
 
 ### Production
-- Base URL: `https://api.bangalianahalalfood.com/api/v1`
+- Base URL: `https://api.healthysupermart.com/api/v1`
 - Stricter CORS policies
 - Generic error messages for security
 - Rate limiting enforced
