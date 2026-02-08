@@ -4,28 +4,28 @@
  * Centralized Currency Manager
  * 
  * This module provides a single source of truth for currency formatting
- * across the entire application. It uses Japanese Yen (¥) as the default currency.
+ * across the entire application. It uses Bangladeshi Taka (৳) as the default currency.
  */
 
 // Currency configuration
 const CURRENCY_CONFIG = {
-  symbol: '¥',
-  code: 'JPY',
-  locale: 'ja-JP',
-  decimals: 0, // JPY typically doesn't use decimal places
+  symbol: '৳',
+  code: 'BDT',
+  locale: 'en-BD',
+  decimals: 2,
 } as const;
 
 /**
- * Format a number as currency using the application's default currency (JPY/¥)
+ * Format a number as currency using the application's default currency (BDT/৳)
  * 
  * @param amount - The numeric amount to format
  * @param options - Optional formatting options
- * @returns Formatted currency string with ¥ symbol
+ * @returns Formatted currency string with ৳ symbol
  * 
  * @example
- * formatCurrency(1000) // "¥1,000"
- * formatCurrency(1234.56) // "¥1,235"
- * formatCurrency(1000, { showDecimals: true }) // "¥1,000.00"
+ * formatCurrency(1000) // "৳1,000.00"
+ * formatCurrency(1234.56) // "৳1,234.56"
+ * formatCurrency(1000, { showDecimals: true }) // "৳1,000.00"
  */
 export const formatCurrency = (
   amount: number | string,
@@ -59,7 +59,7 @@ export const formatPrice = formatCurrency;
 
 /**
  * Get the currency symbol
- * @returns The currency symbol (¥)
+ * @returns The currency symbol (৳)
  */
 export const getCurrencySymbol = (): string => {
   return CURRENCY_CONFIG.symbol;
@@ -67,7 +67,7 @@ export const getCurrencySymbol = (): string => {
 
 /**
  * Get the currency code
- * @returns The currency code (JPY)
+ * @returns The currency code (BDT)
  */
 export const getCurrencyCode = (): string => {
   return CURRENCY_CONFIG.code;
@@ -81,8 +81,8 @@ export const getCurrencyCode = (): string => {
  * @returns Formatted currency string with +/- prefix
  * 
  * @example
- * formatCurrencyWithSign(1000) // "+¥1,000"
- * formatCurrencyWithSign(-500) // "-¥500"
+ * formatCurrencyWithSign(1000) // "+৳1,000.00"
+ * formatCurrencyWithSign(-500) // "-৳500.00"
  */
 export const formatCurrencyWithSign = (amount: number | string): string => {
   const numAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
@@ -100,12 +100,12 @@ export const formatCurrencyWithSign = (amount: number | string): string => {
  * @returns The numeric value
  * 
  * @example
- * parseCurrency("¥1,000") // 1000
- * parseCurrency("¥1,234.56") // 1234.56
+ * parseCurrency("৳1,000") // 1000
+ * parseCurrency("৳1,234.56") // 1234.56
  */
 export const parseCurrency = (currencyString: string): number => {
-  // Remove currency symbols, commas, and whitespace
-  const cleaned = currencyString.replace(/[¥$৳,\s]/g, '');
+  // Keep only numeric characters, decimal point, and negative sign
+  const cleaned = currencyString.replace(/[^\d.-]/g, '');
   return parseFloat(cleaned) || 0;
 };
 

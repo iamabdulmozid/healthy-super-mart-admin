@@ -7,6 +7,7 @@ import { productTagService } from '../services/productTagService';
 import { shopService } from '../services/shopService';
 import { uploadService } from '@/services/uploadService';
 import { BarcodeService } from '@/lib/barcode-service';
+import { getCurrencySymbol } from '@/utils/currency';
 import type { Product, CreateProductRequest, ProductTag } from '@/types/product';
 import type { Category } from '@/types/category';
 import type { Shop } from '@/types/shop';
@@ -18,6 +19,7 @@ interface ProductFormProps {
 }
 
 export default function ProductForm({ product, onClose, onSubmit }: ProductFormProps) {
+  const currencySymbol = getCurrencySymbol();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -752,7 +754,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                     Unit Price (Excluding VAT) *
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-3.5 text-gray-500 text-base">¥</span>
+                    <span className="absolute left-4 top-3.5 text-gray-500 text-base">{currencySymbol}</span>
                     <input
                       type="number"
                       step="0.01"
@@ -786,7 +788,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                     Purchase Price (Including VAT)
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-3.5 text-gray-500 text-base">¥</span>
+                    <span className="absolute left-4 top-3.5 text-gray-500 text-base">{currencySymbol}</span>
                     <input
                       type="number"
                       value={formData.purchasePrice?.toFixed(2) || '0.00'}
@@ -795,7 +797,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                     />
                   </div>
                   <p className="mt-1 text-xs text-green-600 font-medium">
-                    Auto-calculated: ¥{unitPriceExcludingVAT.toFixed(2)} + {vatPercentage}% VAT
+                    Auto-calculated: {currencySymbol}{unitPriceExcludingVAT.toFixed(2)} + {vatPercentage}% VAT
                   </p>
                 </div>
               </div>
@@ -808,7 +810,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                   Shop Price *
                 </label>
                 <div className="relative">
-                  <span className="absolute left-4 top-3.5 text-gray-500 text-base">¥</span>
+                  <span className="absolute left-4 top-3.5 text-gray-500 text-base">{currencySymbol}</span>
                   <input
                     type="number"
                     step="0.01"
@@ -828,7 +830,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                   Online Price *
                 </label>
                 <div className="relative">
-                  <span className="absolute left-4 top-3.5 text-gray-500 text-base">¥</span>
+                  <span className="absolute left-4 top-3.5 text-gray-500 text-base">{currencySymbol}</span>
                   <input
                     type="number"
                     step="0.01"
@@ -848,7 +850,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                   Wholesale Price *
                 </label>
                 <div className="relative">
-                  <span className="absolute left-4 top-3.5 text-gray-500 text-base">¥</span>
+                  <span className="absolute left-4 top-3.5 text-gray-500 text-base">{currencySymbol}</span>
                   <input
                     type="number"
                     step="0.01"
@@ -868,7 +870,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                   Old Price
                 </label>
                 <div className="relative">
-                  <span className="absolute left-4 top-3.5 text-gray-500 text-base">¥</span>
+                  <span className="absolute left-4 top-3.5 text-gray-500 text-base">{currencySymbol}</span>
                   <input
                     type="number"
                     step="0.01"

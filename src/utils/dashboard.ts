@@ -14,7 +14,7 @@ export const formatOrderSummaryData = (data: OrderSummary) => {
   };
 };
 
-export const formatCurrency = (amount: number, _currency: string = 'JPY') => {
+export const formatCurrency = (amount: number, _currency: string = 'BDT') => {
   // Use centralized currency formatter
   // The currency parameter is kept for backward compatibility but not used
   return formatCurrencyUtil(amount);
