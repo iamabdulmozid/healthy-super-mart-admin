@@ -10,7 +10,9 @@ export interface ApiResponse<T = any> {
 export interface ApiError {
   message: string;
   status: number;
-  errors?: Record<string, string[]>;
+  code?: string;
+  errors?: string[];
+  validationErrors?: Record<string, string[]>;
 }
 
 class ApiClient {
@@ -68,8 +70,22 @@ class ApiClient {
 
     if (error.response?.data) {
       const errorData = error.response.data as any;
-      apiError.message = errorData.message || errorData.error || apiError.message;
-      apiError.errors = errorData.errors;
+      
+      // Handle new API error format
+      apiError.code = errorData.code;
+      
+      // Primary message - use errors[0] if available, fallback to message
+      if (errorData.errors && Array.isArray(errorData.errors) && errorData.errors.length > 0) {
+        apiError.message = errorData.errors[0];
+        apiError.errors = errorData.errors;
+      } else {
+        apiError.message = errorData.message || errorData.error || apiError.message;
+      }
+      
+      // Legacy validation errors format (object with field keys)
+      if (errorData.errors && typeof errorData.errors === 'object' && !Array.isArray(errorData.errors)) {
+        apiError.validationErrors = errorData.errors;
+      }
     }
 
     return Promise.reject(apiError);

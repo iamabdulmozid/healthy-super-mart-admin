@@ -1,38 +1,136 @@
 // src/components/layout/Header.tsx
+import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { 
+  Bars3Icon, 
+  ChevronDoubleLeftIcon, 
+  ChevronDoubleRightIcon,
+  ArrowLeftStartOnRectangleIcon,
+  UserCircleIcon,
+  ChevronDownIcon
+} from '@heroicons/react/24/outline';
 
-export default function Header() {
+interface HeaderProps {
+  onMenuClick: () => void;
+  onToggleSidebarCollapse: () => void;
+  isSidebarCollapsed: boolean;
+}
+
+export default function Header({ onMenuClick, onToggleSidebarCollapse, isSidebarCollapsed }: HeaderProps) {
   const { admin, logout } = useAuth();
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = () => {
     if (window.confirm('Are you sure you want to log out?')) {
       logout();
     }
+    setIsUserMenuOpen(false);
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    if (isUserMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isUserMenuOpen]);
+
   return (
-    <header className="bg-white shadow px-4 py-3 flex items-center justify-between">
-      <h1 className="text-xl font-semibold">Grocery POS & Admin</h1>
-      
-      <div className="flex items-center space-x-4">
-        {admin && (
-          <div className="flex items-center space-x-3">
-            <div className="text-sm">
-              <p className="font-medium text-gray-900">
-                {admin.firstName} {admin.lastName}
-              </p>
-              <p className="text-gray-500">
-                {admin.roles.map(role => role.name).join(', ')}
+    <header className="sticky top-0 z-[1200] bg-white/95 border-b border-(--color-border) backdrop-blur-sm">
+      <div className="px-4 md:px-6 lg:px-8 py-3 md:py-4">
+        <div className="flex items-center justify-between gap-4">
+          {/* Left section - Menu buttons */}
+          <div className="flex items-center gap-2">
+            {/* Mobile hamburger */}
+            <button
+              onClick={onMenuClick}
+              className="lg:hidden p-2 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors"
+              aria-label="Toggle menu"
+            >
+              <Bars3Icon className="h-6 w-6" />
+            </button>
+
+            {/* Desktop collapse button */}
+            <button
+              onClick={onToggleSidebarCollapse}
+              className="hidden lg:flex p-2 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors"
+              aria-label="Toggle sidebar"
+            >
+              {isSidebarCollapsed ? (
+                <ChevronDoubleRightIcon className="h-5 w-5" />
+              ) : (
+                <ChevronDoubleLeftIcon className="h-5 w-5" />
+              )}
+            </button>
+
+            {/* Brand name - visible on all screens */}
+            <div className="flex flex-col">
+              <h1 className="text-base sm:text-lg font-semibold text-neutral-900 leading-tight">
+                Healthy Super Mart
+              </h1>
+              <p className="text-[10px] sm:text-xs text-neutral-500 leading-tight">
+                Admin Dashboard
               </p>
             </div>
-            <button
-              onClick={handleLogout}
-              className="text-sm text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded transition-colors"
-            >
-              Logout
-            </button>
           </div>
-        )}
+
+          {/* Right section - User menu */}
+          {admin && (
+            <div className="relative" ref={userMenuRef}>
+              {/* User menu button */}
+              <button
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="flex items-center gap-2 sm:gap-3 px-2 sm:px-3 py-2 bg-neutral-50 hover:bg-neutral-100 rounded-lg transition-colors"
+                aria-label="User menu"
+              >
+                <UserCircleIcon className="h-7 w-7 sm:h-8 sm:w-8 text-neutral-400" />
+                <div className="hidden md:block text-sm text-left">
+                  <p className="font-medium text-neutral-900">
+                    {admin.firstName} {admin.lastName}
+                  </p>
+                  <p className="text-xs text-neutral-500">
+                    {admin.roles.map(role => role.name).join(', ')}
+                  </p>
+                </div>
+                <ChevronDownIcon className={`h-4 w-4 text-neutral-400 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Dropdown menu */}
+              {isUserMenuOpen && (
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-neutral-200 py-2 z-50">
+                  {/* User info - shown on mobile in dropdown */}
+                  <div className="md:hidden px-4 py-3 border-b border-neutral-200">
+                    <p className="font-medium text-neutral-900 text-sm">
+                      {admin.firstName} {admin.lastName}
+                    </p>
+                    <p className="text-xs text-neutral-500 mt-1">
+                      {admin.roles.map(role => role.name).join(', ')}
+                    </p>
+                  </div>
+                  
+                  {/* Logout option */}
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                  >
+                    <ArrowLeftStartOnRectangleIcon className="h-5 w-5" />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

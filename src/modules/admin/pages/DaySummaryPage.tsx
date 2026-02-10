@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { CashbookService } from '@/modules/admin/services/cashbookService';
 import { formatCurrency } from '@/utils/currency';
+import { useToast } from '@/context/ToastContext';
 import type { DaySummary } from '@/types/transaction';
 import { 
   BanknotesIcon, 
@@ -14,9 +15,9 @@ import {
 } from '@heroicons/react/24/outline';
 
 export default function DaySummaryPage() {
+  const { showError } = useToast();
   const [summary, setSummary] = useState<DaySummary | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toISOString().split('T')[0]
   );
@@ -24,25 +25,45 @@ export default function DaySummaryPage() {
   // Get shopId from localStorage or default to 3
   const shopId = Number(localStorage.getItem('shopId')) || 1;
 
-  // Fetch summary
-  const fetchSummary = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      
-      const data = await CashbookService.getDaySummary(shopId, selectedDate);
-      setSummary(data);
-    } catch (err: any) {
-      setError(err.message || 'Failed to fetch day summary');
-      console.error('Error fetching summary:', err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchSummary();
-  }, [selectedDate]);
+    let isMounted = true;
+
+    const loadSummary = async () => {
+      try {
+        setIsLoading(true);
+        
+        const data = await CashbookService.getDaySummary(shopId, selectedDate);
+        
+        if (isMounted) {
+          setSummary(data);
+        }
+      } catch (err: any) {
+        if (isMounted) {
+          const hasErrors = err.errors && err.errors.length > 0;
+          const errorMessage = hasErrors 
+            ? 'Failed to load day summary. Please try again.'
+            : (err.message || 'Failed to fetch day summary');
+          
+          showError(
+            errorMessage,
+            `Error${err.code ? ` (${err.code})` : ''}`,
+            hasErrors ? err.errors : undefined
+          );
+          console.error('Error fetching summary:', err);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    loadSummary();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedDate, shopId, showError]);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(e.target.value);
@@ -96,14 +117,6 @@ export default function DaySummaryPage() {
           />
         </div>
       </div>
-
-      {/* Error Message */}
-      {error && (
-        <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-          <p className="font-medium">Error loading summary</p>
-          <p className="text-sm">{error}</p>
-        </div>
-      )}
 
       {/* Summary Content */}
       {summary && (
@@ -370,7 +383,7 @@ export default function DaySummaryPage() {
         </>
       )}
 
-      {!summary && !isLoading && !error && (
+      {!summary && !isLoading && (
         <div className="bg-white rounded-lg shadow-sm p-8 text-center">
           <p className="text-gray-500">No data available for the selected date</p>
         </div>

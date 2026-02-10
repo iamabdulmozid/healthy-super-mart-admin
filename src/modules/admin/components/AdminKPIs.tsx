@@ -1,9 +1,17 @@
 import { useState, useEffect } from 'react';
 import { OrderService } from '../services/orderService';
 import { formatCurrency } from '@/utils/currency';
+import { Card, CardContent } from '@/components/ui';
+import { useToast } from '@/context/ToastContext';
 import type { OrderSummary, SummaryPreset } from '@/types/order';
+import {
+  ShoppingBagIcon,
+  BanknotesIcon,
+  CubeIcon,
+} from '@heroicons/react/24/outline';
 
 export default function AdminKPIs() {
+  const { showError } = useToast();
   const [summary, setSummary] = useState<OrderSummary>({
     total_orders: 0,
     total_sales: 0,
@@ -11,7 +19,6 @@ export default function AdminKPIs() {
   });
   const [selectedPreset, setSelectedPreset] = useState<SummaryPreset>('today');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   const presetOptions = [
     { value: 'today', label: 'Today' },
@@ -24,12 +31,14 @@ export default function AdminKPIs() {
   const fetchSummary = async (preset: SummaryPreset) => {
     try {
       setLoading(true);
-      setError(null);
       const data = await OrderService.getOrdersSummary(preset);
       setSummary(data);
-    } catch (err) {
-      setError('Failed to fetch orders summary');
-      console.error('Error fetching orders summary:', err);
+    } catch (err: any) {
+      showError(
+        err?.message || 'Failed to fetch orders summary',
+        `Error${err?.code ? ` (${err.code})` : ''}`,
+        err?.errors
+      );
     } finally {
       setLoading(false);
     }
@@ -44,20 +53,44 @@ export default function AdminKPIs() {
     setSelectedPreset(newPreset);
   };
 
+  const kpiCards = [
+    {
+      title: 'Total Orders',
+      value: summary.total_orders.toLocaleString(),
+      icon: ShoppingBagIcon,
+      bgColor: 'bg-primary-100',
+      iconColor: 'text-primary-600',
+    },
+    {
+      title: 'Total Sales',
+      value: formatCurrency(summary.total_sales),
+      icon: BanknotesIcon,
+      bgColor: 'bg-secondary-100',
+      iconColor: 'text-secondary-600',
+    },
+    {
+      title: 'Items Sold',
+      value: summary.total_items_sold.toLocaleString(),
+      icon: CubeIcon,
+      bgColor: 'bg-accent-100',
+      iconColor: 'text-accent-600',
+    },
+  ];
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Time Period Selector */}
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-medium text-gray-900">Key Performance Indicators</h3>
-        <div className="flex items-center space-x-2">
-          <label htmlFor="preset-select" className="text-sm font-medium text-gray-700">
-            Time Period:
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h3 className="text-lg font-semibold text-neutral-900">Key Performance Indicators</h3>
+        <div className="flex items-center gap-2">
+          <label htmlFor="preset-select" className="text-sm font-medium text-neutral-700 uppercase tracking-wide">
+            Period:
           </label>
           <select
             id="preset-select"
             value={selectedPreset}
             onChange={handlePresetChange}
-            className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="border border-(--color-border) rounded-lg px-4 py-2 text-sm focus:outline-hidden focus:ring-3 focus:ring-primary-500/20 focus:border-primary-500 bg-white transition-all"
             disabled={loading}
           >
             {presetOptions.map((option) => (
@@ -69,68 +102,34 @@ export default function AdminKPIs() {
         </div>
       </div>
 
-      {/* Error State */}
-      {error && (
-        <div className="bg-red-50 border border-red-200 rounded-md p-4">
-          <p className="text-red-800 text-sm">{error}</p>
-        </div>
-      )}
-
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-1">
-              <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                Total Orders
-              </h4>
-              <p className="text-2xl font-bold text-gray-900 mt-2">
-                {loading ? '...' : summary.total_orders.toLocaleString()}
-              </p>
-            </div>
-            <div className="p-3 bg-blue-100 rounded-lg">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-1">
-              <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                Total Sales
-              </h4>
-              <p className="text-2xl font-bold text-gray-900 mt-2">
-                {loading ? '...' : formatCurrency(summary.total_sales)}
-              </p>
-            </div>
-            <div className="p-3 bg-green-100 rounded-lg">
-              <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-1">
-              <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                Items Sold
-              </h4>
-              <p className="text-2xl font-bold text-gray-900 mt-2">
-                {loading ? '...' : summary.total_items_sold.toLocaleString()}
-              </p>
-            </div>
-            <div className="p-3 bg-purple-100 rounded-lg">
-              <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-              </svg>
-            </div>
-          </div>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {kpiCards.map((kpi, index) => {
+          const Icon = kpi.icon;
+          return (
+            <Card key={index} variant="bordered" padding="none" className="overflow-hidden">
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-2">
+                      {kpi.title}
+                    </p>
+                    <p className="text-2xl md:text-3xl font-bold text-neutral-900">
+                      {loading ? (
+                        <span className="inline-block w-20 h-8 bg-neutral-100 rounded animate-pulse" />
+                      ) : (
+                        kpi.value
+                      )}
+                    </p>
+                  </div>
+                  <div className={`${kpi.bgColor} p-3 rounded-xl`}>
+                    <Icon className={`w-6 h-6 ${kpi.iconColor}`} />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </div>
   );

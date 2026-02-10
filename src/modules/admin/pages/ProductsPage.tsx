@@ -11,9 +11,12 @@ import {
   BulkBarcodeGenerator,
   LowQuantityAlert
 } from '../components';
+import { Button, Badge } from '@/components/ui';
+import { useToast } from '@/context/ToastContext';
 import type { Product, ProductFilters as ProductFiltersType } from '@/types/product';
 
 export default function ProductsPage() {
+  const { showError, showSuccess } = useToast();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -42,11 +45,15 @@ export default function ProductsPage() {
       setProducts(response.data.products);
       setPagination(response.data.pagination);
     } catch (error: any) {
-      console.error('Failed to load products:', error.message || error);
+      showError(
+        error.message || 'Failed to load products',
+        `Error${error.code ? ` (${error.code})` : ''}`,
+        error.errors
+      );
     } finally {
       setLoading(false);
     }
-  }, [filters]);
+  }, [filters, showError]);
 
   useEffect(() => {
     loadProducts();
@@ -73,10 +80,14 @@ export default function ProductsPage() {
       // Load full product details with shop inventory
       const fullProduct = await productService.getProductById(product.id, true);
       console.log('Product details:', fullProduct);
-      console.log('Product details loaded successfully');
+      showSuccess('Product details loaded successfully');
       // You can implement a view modal here if needed
     } catch (error: any) {
-      console.error('Failed to load product details:', error.message || error);
+      showError(
+        error.message || 'Failed to load product details',
+        `Error${error.code ? ` (${error.code})` : ''}`,
+        error.errors
+      );
     }
   };
 
@@ -88,7 +99,10 @@ export default function ProductsPage() {
     setShowCreateModal(false);
     setEditingProduct(null);
     await loadProducts();
-    console.log(editingProduct ? 'Product updated successfully' : 'Product created successfully');
+    showSuccess(
+      editingProduct ? 'Product updated successfully' : 'Product created successfully',
+      'Success'
+    );
   };
 
   const handleFormClose = () => {
@@ -103,9 +117,13 @@ export default function ProductsPage() {
       await productService.deleteProduct(deletingProduct.id);
       setDeletingProduct(null);
       await loadProducts();
-      console.log('Product deleted successfully');
+      showSuccess('Product deleted successfully', 'Success');
     } catch (error: any) {
-      console.error('Failed to delete product:', error.message || error);
+      showError(
+        error.message || 'Failed to delete product',
+        `Error${error.code ? ` (${error.code})` : ''}`,
+        error.errors
+      );
     }
   };
 
@@ -140,31 +158,29 @@ export default function ProductsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Products</h1>
-          <p className="text-gray-600">
-            {filters.lowQuantity 
-              ? `Showing ${pagination.total} low stock ${pagination.total === 1 ? 'item' : 'items'}`
-              : `• ${pagination.total} total ${pagination.total === 1 ? 'product' : 'products'}`
-            }
-          </p>
+          <h1 className="text-3xl font-bold text-neutral-900">Products</h1>
+          <div className="flex items-center gap-2 mt-2">
+            {filters.lowQuantity ? (
+              <Badge variant="warning">
+                {pagination.total} low stock {pagination.total === 1 ? 'item' : 'items'}
+              </Badge>
+            ) : (
+              <p className="text-neutral-600">
+                {pagination.total} total {pagination.total === 1 ? 'product' : 'products'}
+              </p>
+            )}
+          </div>
         </div>
         <div className="flex gap-3">
-          {/* <button
-            onClick={handleBulkBarcodeGeneration}
-            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 flex items-center gap-2"
-          >
-            <QrCodeIcon className="h-5 w-5" />
-            Generate Barcode
-          </button> */}
-          <button
+          <Button
+            variant="primary"
             onClick={handleCreateProduct}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
+            icon={<PlusIcon className="h-5 w-5" />}
           >
-            <PlusIcon className="h-5 w-5" />
             Add Product
-          </button>
+          </Button>
         </div>
       </div>
 

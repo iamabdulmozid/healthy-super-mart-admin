@@ -1,6 +1,7 @@
 // src/routes/AppRoutes.tsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '@/context/AuthContext';
+import { ToastProvider } from '@/context/ToastContext';
 import LoginPage from '@/pages/LoginPage';
 import POSPage from '@/modules/pos/pages/POSPage';
 import DashboardPage from '@/modules/admin/pages/DashboardPage';
@@ -29,11 +30,12 @@ function UnauthorizedPage() {
 export default function AppRoutes() {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          {/* Public routes */}
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/unauthorized" element={<UnauthorizedPage />} />
+      <ToastProvider>
+        <Router>
+          <Routes>
+            {/* Public routes */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/unauthorized" element={<UnauthorizedPage />} />
           
           {/* Protected routes */}
           <Route
@@ -127,6 +129,7 @@ export default function AppRoutes() {
           </Route>
         </Routes>
       </Router>
+      </ToastProvider>
     </AuthProvider>
   );
 }

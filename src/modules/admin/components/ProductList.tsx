@@ -1,6 +1,7 @@
 // src/modules/admin/components/ProductList.tsx
 import { PencilIcon, TrashIcon, EyeIcon, ChevronLeftIcon, ChevronRightIcon, QrCodeIcon } from '@heroicons/react/24/outline';
 import { formatCurrency } from '@/utils/currency';
+import { Badge, Button } from '@/components/ui';
 import type { Product } from '@/types/product';
 
 interface ProductListProps {
@@ -31,21 +32,15 @@ export default function ProductList({
 }: ProductListProps) {
   const getStatusBadge = (status: string) => {
     return status === 'active' ? (
-      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-        Active
-      </span>
+      <Badge variant="success" size="sm">Active</Badge>
     ) : (
-      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-        Inactive
-      </span>
+      <Badge variant="danger" size="sm">Inactive</Badge>
     );
   };
 
   const getFeaturedBadge = (isFeatured: boolean) => {
     return isFeatured ? (
-      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-        Featured
-      </span>
+      <Badge variant="warning" size="sm">Featured</Badge>
     ) : null;
   };
 
@@ -59,10 +54,10 @@ export default function ProductList({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border">
-        <div className="p-8 text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="mt-4 text-gray-600">Loading products...</p>
+      <div className="bg-white rounded-lg border border-(--color-border) shadow-xs">
+        <div className="p-12 text-center">
+          <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-3 border-primary-600"></div>
+          <p className="mt-4 text-neutral-600 font-medium">Loading products...</p>
         </div>
       </div>
     );
@@ -70,52 +65,52 @@ export default function ProductList({
 
   if (products.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border">
-        <div className="p-8 text-center">
-          <div className="mx-auto h-12 w-12 text-gray-400">
+      <div className="bg-white rounded-lg border border-(--color-border) shadow-xs">
+        <div className="p-12 text-center">
+          <div className="mx-auto h-16 w-16 text-neutral-400">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
             </svg>
           </div>
-          <h3 className="mt-4 text-lg font-medium text-gray-900">No products found</h3>
-          <p className="mt-2 text-gray-600">Get started by creating your first product.</p>
+          <h3 className="mt-4 text-xl font-semibold text-neutral-900">No products found</h3>
+          <p className="mt-2 text-neutral-600">Get started by creating your first product.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+    <div className="bg-white rounded-lg border border-(--color-border) shadow-xs overflow-hidden">
+      <div className="overflow-x-auto scrollbar-thin">
+        <table className="min-w-full divide-y divide-(--color-border-light)">
+          <thead className="bg-neutral-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">
                 Product
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">
                 Prices
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">
                 Stock
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">
                 Status
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">
                 Barcode
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">
                 Created
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-4 text-right text-xs font-semibold text-neutral-600 uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-(--color-border-light)">
             {products.map((product) => (
-              <tr key={product.id} className={`hover:bg-gray-50 ${product.stockQuantity < 10 ? 'bg-red-50 border-l-4 border-red-400' : ''}`}>
+              <tr key={product.id} className={`hover:bg-neutral-50 transition-colors ${product.stockQuantity < 10 ? 'bg-red-50/50 border-l-4 border-red-500' : ''}`}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="h-10 w-10 flex-shrink-0">
@@ -130,65 +125,65 @@ export default function ProductList({
                       )}
                     </div>
                     <div className="ml-4">
-                      <div className="text-sm font-medium text-gray-900">{product.name}</div>
-                      <div className="text-sm text-gray-500">{product.slug}</div>
-                      <div className="flex space-x-2 mt-1">
+                      <div className="text-sm font-semibold text-neutral-900">{product.name}</div>
+                      <div className="text-xs text-neutral-500 font-mono">{product.slug}</div>
+                      <div className="flex space-x-2 mt-1.5">
                         {getFeaturedBadge(product.isFeatured)}
                       </div>
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
-                    <div>Retail: {formatPrice(product.retailPrice)}</div>
-                    <div className="text-blue-600">
+                  <div className="text-sm space-y-0.5">
+                    <div className="text-neutral-700 font-medium">Retail: {formatPrice(product.retailPrice)}</div>
+                    <div className="text-primary-600 font-medium">
                       POS: {product.posPrice !== undefined && product.posPrice !== null 
                         ? formatPrice(product.posPrice) 
-                        : <span className="text-gray-400 italic">Not set</span>
+                        : <span className="text-neutral-400 italic">Not set</span>
                       }
                     </div>
-                    <div className="text-gray-500">Wholesale: {formatPrice(product.wholesalePrice)}</div>
+                    <div className="text-neutral-500">Wholesale: {formatPrice(product.wholesalePrice)}</div>
                     {product.oldPrice && (
-                      <div className="text-gray-400 line-through text-xs">Old: {formatPrice(product.oldPrice)}</div>
+                      <div className="text-neutral-400 line-through text-xs">Old: {formatPrice(product.oldPrice)}</div>
                     )}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
+                  <div className="text-sm">
                     <div className="flex items-center space-x-2">
-                      <span className={`font-medium ${product.stockQuantity < 10 ? 'text-red-600' : 'text-gray-900'}`}>
+                      <span className={`font-semibold text-lg ${product.stockQuantity < 10 ? 'text-red-600' : 'text-neutral-900'}`}>
                         {product.stockQuantity}
                       </span>
                       {product.stockQuantity < 10 && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700">
-                          <svg className="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <Badge variant="danger" size="sm" className="flex items-center gap-1">
+                          <svg className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                           </svg>
-                          Low Stock
-                        </span>
+                          Low
+                        </Badge>
                       )}
                     </div>
                     {product.weight && (
-                      <div className="text-xs text-gray-500">{product.weight}kg</div>
+                      <div className="text-xs text-neutral-500 mt-1">{product.weight}kg</div>
                     )}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex flex-col space-y-1">
+                  <div className="flex flex-col space-y-1.5">
                     {getStatusBadge(product.status)}
-                    <span className="text-xs text-gray-500 capitalize">{product.shippingType}</span>
+                    <span className="text-xs text-neutral-500 capitalize font-medium">{product.shippingType}</span>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
                   {product.barcode ? (
                     <div className="flex items-center space-x-2">
-                      <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">
+                      <code className="bg-neutral-100 px-2.5 py-1 rounded-md text-xs font-mono text-neutral-700">
                         {product.barcode}
                       </code>
                       {onGenerateBarcode && (
                         <button
                           onClick={() => onGenerateBarcode(product)}
-                          className="text-blue-600 hover:text-blue-900"
+                          className="text-primary-600 hover:text-primary-800 p-1 hover:bg-primary-50 rounded transition-colors"
                           title="View/Print Barcode"
                         >
                           <QrCodeIcon className="h-4 w-4" />
@@ -197,11 +192,11 @@ export default function ProductList({
                     </div>
                   ) : (
                     <div className="flex items-center space-x-2">
-                      <span className="text-gray-400 text-xs">No barcode</span>
+                      <span className="text-neutral-400 text-xs italic">No barcode</span>
                       {onGenerateBarcode && (
                         <button
                           onClick={() => onGenerateBarcode(product)}
-                          className="text-gray-500 hover:text-gray-700"
+                          className="text-neutral-500 hover:text-neutral-700 p-1 hover:bg-neutral-50 rounded transition-colors"
                           title="Generate Barcode"
                         >
                           <QrCodeIcon className="h-4 w-4" />
@@ -210,28 +205,28 @@ export default function ProductList({
                     </div>
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-500 font-medium">
                   {new Date(product.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div className="flex items-center justify-end space-x-2">
+                  <div className="flex items-center justify-end space-x-1">
                     <button
                       onClick={() => onView(product)}
-                      className="text-blue-600 hover:text-blue-900"
+                      className="p-2 text-primary-600 hover:text-primary-800 hover:bg-primary-50 rounded-lg transition-colors"
                       title="View product"
                     >
                       <EyeIcon className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => onEdit(product)}
-                      className="text-yellow-600 hover:text-yellow-900"
+                      className="p-2 text-accent-600 hover:text-accent-800 hover:bg-accent-50 rounded-lg transition-colors"
                       title="Edit product"
                     >
                       <PencilIcon className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => onDelete(product)}
-                      className="text-red-600 hover:text-red-900"
+                      className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-colors"
                       title="Delete product"
                     >
                       <TrashIcon className="h-4 w-4" />
@@ -246,45 +241,47 @@ export default function ProductList({
       
       {/* Pagination */}
       {pagination.totalPages > 1 && (
-        <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
+        <div className="bg-neutral-50 px-4 py-4 flex items-center justify-between border-t border-(--color-border-light)">
           <div className="flex-1 flex justify-between sm:hidden">
-            <button
+            <Button
+              variant="outline"
+              size="sm"
               onClick={() => onPageChange(pagination.currentPage - 1)}
               disabled={pagination.currentPage === 1}
-              className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
             >
               Previous
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
               onClick={() => onPageChange(pagination.currentPage + 1)}
               disabled={pagination.currentPage === pagination.totalPages}
-              className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
             >
               Next
-            </button>
+            </Button>
           </div>
           <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-neutral-700">
                 Showing{' '}
-                <span className="font-medium">
+                <span className="font-semibold text-neutral-900">
                   {(pagination.currentPage - 1) * pagination.limit + 1}
                 </span>{' '}
                 to{' '}
-                <span className="font-medium">
+                <span className="font-semibold text-neutral-900">
                   {Math.min(pagination.currentPage * pagination.limit, pagination.total)}
                 </span>{' '}
-                of <span className="font-medium">{pagination.total}</span> results
+                of <span className="font-semibold text-neutral-900">{pagination.total}</span> results
               </p>
             </div>
             <div>
-              <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+              <nav className="relative z-0 inline-flex rounded-lg border border-(--color-border) bg-white shadow-xs overflow-hidden">
                 <button
                   onClick={() => onPageChange(pagination.currentPage - 1)}
                   disabled={pagination.currentPage === 1}
-                  className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                  className="relative inline-flex items-center px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors border-r border-(--color-border-light)"
                 >
-                  <ChevronLeftIcon className="h-5 w-5" />
+                  <ChevronLeftIcon className="h-4 w-4" />
                 </button>
                 
                 {/* Page numbers */}
@@ -294,10 +291,10 @@ export default function ProductList({
                     <button
                       key={page}
                       onClick={() => onPageChange(page)}
-                      className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                      className={`relative inline-flex items-center px-4 py-2 border-r border-(--color-border-light) text-sm font-medium transition-colors ${
                         pagination.currentPage === page
-                          ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
-                          : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                          ? 'bg-primary-600 text-white z-10'
+                          : 'bg-white text-neutral-700 hover:bg-neutral-50'
                       }`}
                     >
                       {page}
@@ -308,9 +305,9 @@ export default function ProductList({
                 <button
                   onClick={() => onPageChange(pagination.currentPage + 1)}
                   disabled={pagination.currentPage === pagination.totalPages}
-                  className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                  className="relative inline-flex items-center px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                 >
-                  <ChevronRightIcon className="h-5 w-5" />
+                  <ChevronRightIcon className="h-4 w-4" />
                 </button>
               </nav>
             </div>

@@ -8,6 +8,7 @@ import { shopService } from '../services/shopService';
 import { uploadService } from '@/services/uploadService';
 import { BarcodeService } from '@/lib/barcode-service';
 import { getCurrencySymbol } from '@/utils/currency';
+import { useToast } from '@/context/ToastContext';
 import type { Product, CreateProductRequest, ProductTag } from '@/types/product';
 import type { Category } from '@/types/category';
 import type { Shop } from '@/types/shop';
@@ -20,8 +21,8 @@ interface ProductFormProps {
 
 export default function ProductForm({ product, onClose, onSubmit }: ProductFormProps) {
   const currencySymbol = getCurrencySymbol();
+  const { showError, showSuccess } = useToast();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Category[]>([]);
   const [tags, setTags] = useState<ProductTag[]>([]);
@@ -289,18 +290,17 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      setError('Please select a valid image file');
+      showError('Please select a valid image file', 'Invalid File');
       return;
     }
 
     // Validate file size (5MB limit)
     if (file.size > 5 * 1024 * 1024) {
-      setError('Image file size should be less than 5MB');
+      showError('Image file size should be less than 5MB', 'File Too Large');
       return;
     }
 
     setImageUploading(true);
-    setError(null);
 
     try {
       // Clean up previous object URL
@@ -329,7 +329,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
       URL.revokeObjectURL(previewUrl);
       previewObjectUrl.current = null;
     } catch (error: any) {
-      setError(error.message || 'Failed to upload image');
+      showError(error.message || 'Failed to upload image', 'Upload Error');
       setPreviewImage(null);
       // Clean up object URL on error
       if (previewObjectUrl.current) {
@@ -365,12 +365,11 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
 
     try {
       // Validate shop selection for new products
       if (!isEditing && selectedShopIds.length === 0) {
-        setError('Please select at least one shop for the product');
+        showError('Please select at least one shop for the product', 'Validation Error');
         setLoading(false);
         return;
       }
@@ -410,14 +409,26 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
 
       if (isEditing && product) {
         await productService.updateProduct(product.id, submitData);
+        showSuccess('Product updated successfully', 'Success');
       } else {
         // Use multi-shop endpoint for new products
         await productService.createMultiShopProduct(submitData);
+        showSuccess('Product created successfully', 'Success');
       }
       
       onSubmit();
     } catch (error: any) {
-      setError(error.message || 'An error occurred while saving the product');
+      // Show toast notification with all validation errors
+      const hasValidationErrors = error.errors && error.errors.length > 0;
+      const toastMessage = hasValidationErrors
+        ? 'Please fix the following issues:'
+        : (error.message || 'Failed to save product');
+      
+      showError(
+        toastMessage,
+        `${isEditing ? 'Update' : 'Create'} Error${error.code ? ` (${error.code})` : ''}`,
+        hasValidationErrors ? error.errors : undefined
+      );
     } finally {
       setLoading(false);
     }
@@ -442,21 +453,6 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
       </div>
 
       <div className="px-6 py-6">
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium">{error}</p>
-              </div>
-            </div>
-          </div>
-        )}
-
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Basic Information Section */}
           <div>

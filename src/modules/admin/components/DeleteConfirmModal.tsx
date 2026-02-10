@@ -1,5 +1,6 @@
 // src/modules/admin/components/DeleteConfirmModal.tsx
-import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { Button } from '@/components/ui';
 
 interface DeleteConfirmModalProps {
   title: string;
@@ -15,41 +16,38 @@ export default function DeleteConfirmModal({
   onCancel 
 }: DeleteConfirmModalProps) {
   return (
-    <div className="fixed inset-0 bg-black/10 backdrop-blur-[2px] flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-2xl max-w-md w-full p-6 animate-in fade-in zoom-in duration-200">
-        <div className="flex items-start gap-4 mb-4">
-          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+    <div 
+      className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[1400] p-4"
+      style={{ zIndex: 'var(--z-modal)' }}
+    >
+      <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 animate-in fade-in zoom-in duration-200">
+        <div className="flex items-start gap-4">
+          <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center">
             <ExclamationTriangleIcon className="h-6 w-6 text-red-600" />
           </div>
-          <div className="flex-1">
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">
+          <div className="flex-1 min-w-0">
+            <h3 className="text-lg font-semibold text-neutral-900 mb-2">
               {title}
             </h3>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-neutral-600 leading-relaxed">
               {message}
             </p>
           </div>
-          <button
-            onClick={onCancel}
-            className="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <XMarkIcon className="h-5 w-5" />
-          </button>
         </div>
 
         <div className="flex justify-end gap-3 mt-6">
-          <button
+          <Button
+            variant="outline"
             onClick={onCancel}
-            className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="danger"
             onClick={onConfirm}
-            className="px-4 py-2 rounded-lg text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
           >
             Delete
-          </button>
+          </Button>
         </div>
       </div>
     </div>
