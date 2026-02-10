@@ -184,7 +184,7 @@ export default function BarcodeSearch() {
           
           {/* Autocomplete Dropdown */}
           {showSuggestions && suggestions.length > 0 && (
-            <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+            <div className="absolute z-50 w-full mt-1 bg-white border border-neutral-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
               {suggestions.map((item) => (
                 <button
                   key={item.id}
@@ -201,7 +201,7 @@ export default function BarcodeSearch() {
 
           {/* Loading indicator for suggestions */}
           {isLoadingSuggestions && searchValue.length >= 2 && (
-            <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg px-4 py-2">
+            <div className="absolute z-50 w-full mt-1 bg-white border border-neutral-200 rounded-md shadow-lg px-4 py-2">
               <div className="text-gray-500 text-sm">Loading...</div>
             </div>
           )}

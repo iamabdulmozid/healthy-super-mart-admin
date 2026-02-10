@@ -155,7 +155,7 @@ export default function BulkBarcodeGenerator({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-200">
+        <div className="px-6 py-4 border-b border-neutral-200">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900">
               Bulk Barcode Generator
@@ -171,7 +171,7 @@ export default function BulkBarcodeGenerator({
 
         <div className="flex-1 overflow-hidden flex">
           {/* Sidebar - Controls */}
-          <div className="w-80 border-r border-gray-200 p-6 overflow-y-auto">
+          <div className="w-80 border-r border-neutral-200 p-6 overflow-y-auto">
             <div className="space-y-6">
               {/* Layout Selection */}
               <div>
@@ -181,7 +181,7 @@ export default function BulkBarcodeGenerator({
                 <select
                   value={LAYOUT_PRESETS.findIndex(l => l.name === selectedLayout.name)}
                   onChange={(e) => setSelectedLayout(LAYOUT_PRESETS[parseInt(e.target.value)])}
-                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="block w-full px-3 py-2 border border-neutral-200 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 >
                   {LAYOUT_PRESETS.map((layout, index) => (
                     <option key={index} value={index}>
@@ -207,7 +207,7 @@ export default function BulkBarcodeGenerator({
                     {selectedProducts.size === products.length ? 'Deselect All' : 'Select All'}
                   </button>
                 </div>
-                <div className="max-h-60 overflow-y-auto border border-gray-200 rounded-md">
+                <div className="max-h-60 overflow-y-auto border border-neutral-200 rounded-md">
                   {products.map(product => (
                     <label
                       key={product.id}
@@ -217,7 +217,7 @@ export default function BulkBarcodeGenerator({
                         type="checkbox"
                         checked={selectedProducts.has(product.id)}
                         onChange={() => toggleProductSelection(product.id)}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-neutral-200 rounded"
                       />
                       <div className="ml-3 flex-1">
                         <div className="text-sm font-medium text-gray-900">
@@ -285,7 +285,7 @@ export default function BulkBarcodeGenerator({
                 {generatedBarcodes.map(({ product, barcodeDataURL }, index) => (
                   <div
                     key={`${product.id}-${index}`}
-                    className="border border-gray-300 flex flex-col items-center justify-center text-center p-2 bg-white"
+                    className="border border-neutral-200 flex flex-col items-center justify-center text-center p-2 bg-white"
                     style={{
                       width: selectedLayout.labelWidth,
                       height: selectedLayout.labelHeight,
@@ -315,7 +315,7 @@ export default function BulkBarcodeGenerator({
                   return emptySlots < totalSlots ? Array.from({ length: emptySlots }, (_, index) => (
                     <div
                       key={`empty-${index}`}
-                      className="border border-gray-300 bg-gray-50"
+                      className="border border-neutral-200 bg-gray-50"
                       style={{
                         width: selectedLayout.labelWidth,
                         height: selectedLayout.labelHeight,

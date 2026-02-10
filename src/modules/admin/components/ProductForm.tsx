@@ -434,11 +434,11 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
     }
   };
 
-  const inputClassName = "block w-full px-4 py-3 text-base border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors";
+  const inputClassName = "block w-full px-4 py-3 text-base border border-neutral-200 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors";
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border mb-6">
-      <div className="px-6 py-4 border-b border-gray-200">
+    <div className="bg-white rounded-lg shadow-sm border border-neutral-200 mb-6">
+      <div className="px-6 py-4 border-b border-neutral-200">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900">
             {isEditing ? 'Edit Product' : 'Create New Product'}
@@ -494,7 +494,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                   rows={4}
                   value={formData.description}
                   onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                  className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
+                  className="block w-full px-4 py-3 text-base border border-neutral-200 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
                   placeholder="Enter product description..."
                 />
               </div>
@@ -571,7 +571,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                   )}
 
                   {/* Shop Selection Buttons */}
-                  <div className="border border-gray-300 rounded-lg p-4 bg-gray-50">
+                  <div className="border border-neutral-200 rounded-lg p-4 bg-gray-50">
                     <div className="flex justify-between items-center mb-3">
                       <p className="text-xs text-gray-600">
                         Select shops where this product will be available
@@ -611,8 +611,8 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                                 isSelected
                                   ? 'bg-green-600 text-white border-green-600 hover:bg-green-700'
                                   : isActive
-                                  ? 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
-                                  : 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+                                  ? 'bg-white text-gray-700 border-neutral-200 hover:bg-gray-100'
+                                  : 'bg-gray-100 text-gray-400 border-neutral-200 cursor-not-allowed'
                               }`}
                             >
                               {shop.name}
@@ -643,7 +643,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                   <button
                     type="button"
                     onClick={generateBarcode}
-                    className="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg border border-gray-300 flex items-center space-x-2 transition-colors"
+                    className="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg border border-neutral-200 flex items-center space-x-2 transition-colors"
                     title="Generate Barcode"
                   >
                     <ArrowPathIcon className="h-4 w-4" />
@@ -705,7 +705,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                 )}
 
                 {/* Available Tags Selection */}
-                <div className="border border-gray-300 rounded-lg p-4 bg-gray-50">
+                <div className="border border-neutral-200 rounded-lg p-4 bg-gray-50">
                   <p className="text-xs text-gray-600 mb-3">
                     Select tags to categorize this product (multiple selections allowed)
                   </p>
@@ -723,7 +723,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                             className={`px-3 py-1.5 text-sm font-medium rounded-full border transition-colors ${
                               isSelected
                                 ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'
-                                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+                                : 'bg-white text-gray-700 border-neutral-200 hover:bg-gray-100'
                             }`}
                           >
                             {tag.name}
@@ -757,7 +757,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                       min="0"
                       value={unitPriceExcludingVAT || ''}
                       onChange={(e) => handleUnitPriceChange(parseFloat(e.target.value) || 0)}
-                      className="block w-full pl-10 pr-4 py-3 text-base border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="block w-full pl-10 pr-4 py-3 text-base border border-neutral-200 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="0.00"
                     />
                   </div>
@@ -771,7 +771,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                   <select
                     value={vatPercentage}
                     onChange={(e) => handleVATPercentageChange(parseInt(e.target.value))}
-                    className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="block w-full px-4 py-3 text-base border border-neutral-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   >
                     <option value={8}>8%</option>
                     <option value={10}>10%</option>
@@ -789,7 +789,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                       type="number"
                       value={formData.purchasePrice?.toFixed(2) || '0.00'}
                       readOnly
-                      className="block w-full pl-10 pr-4 py-3 text-base border border-gray-300 rounded-lg shadow-sm bg-gray-50 text-gray-700"
+                      className="block w-full pl-10 pr-4 py-3 text-base border border-neutral-200 rounded-lg shadow-sm bg-gray-50 text-gray-700"
                     />
                   </div>
                   <p className="mt-1 text-xs text-green-600 font-medium">
@@ -814,7 +814,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                     required
                     value={formData.posPrice || ''}
                     onChange={(e) => setFormData(prev => ({ ...prev, posPrice: parseFloat(e.target.value) || 0 }))}
-                    className="block w-full pl-10 pr-4 py-3 text-base border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="block w-full pl-10 pr-4 py-3 text-base border border-neutral-200 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="0.00"
                   />
                 </div>
@@ -834,7 +834,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                     required
                     value={formData.retailPrice || ''}
                     onChange={(e) => setFormData(prev => ({ ...prev, retailPrice: parseFloat(e.target.value) || 0 }))}
-                    className="block w-full pl-10 pr-4 py-3 text-base border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="block w-full pl-10 pr-4 py-3 text-base border border-neutral-200 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="0.00"
                   />
                 </div>
@@ -854,7 +854,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                     required
                     value={formData.wholesalePrice || ''}
                     onChange={(e) => setFormData(prev => ({ ...prev, wholesalePrice: parseFloat(e.target.value) || 0 }))}
-                    className="block w-full pl-10 pr-4 py-3 text-base border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="block w-full pl-10 pr-4 py-3 text-base border border-neutral-200 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="0.00"
                   />
                 </div>
@@ -873,7 +873,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                     min="0"
                     value={formData.oldPrice || ''}
                     onChange={(e) => setFormData(prev => ({ ...prev, oldPrice: parseFloat(e.target.value) || 0 }))}
-                    className="block w-full pl-10 pr-4 py-3 text-base border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="block w-full pl-10 pr-4 py-3 text-base border border-neutral-200 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="0.00"
                   />
                 </div>
@@ -992,7 +992,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                       <img
                         src={previewImage}
                         alt="Product preview"
-                        className="w-32 h-32 object-cover rounded-lg border border-gray-200"
+                        className="w-32 h-32 object-cover rounded-lg border border-neutral-200"
                       />
                       <button
                         type="button"
@@ -1004,7 +1004,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                       </button>
                     </div>
                   ) : (
-                    <div className="w-32 h-32 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+                    <div className="w-32 h-32 border-2 border-dashed border-neutral-200 rounded-lg flex items-center justify-center">
                       <PhotoIcon className="h-8 w-8 text-gray-400" />
                     </div>
                   )}
@@ -1103,7 +1103,7 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
                   type="checkbox"
                   checked={formData.isFeatured}
                   onChange={(e) => setFormData(prev => ({ ...prev, isFeatured: e.target.checked }))}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-neutral-200 rounded"
                 />
                 <label htmlFor="isFeatured" className="ml-3 block text-sm font-medium text-gray-700">
                   Mark as Featured Product
@@ -1114,11 +1114,11 @@ export default function ProductForm({ product, onClose, onSubmit }: ProductFormP
           </div>
 
           {/* Form Actions */}
-          <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+          <div className="flex justify-end space-x-3 pt-6 border-t border-neutral-200">
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              className="px-6 py-3 border border-neutral-200 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
             >
               Cancel
             </button>

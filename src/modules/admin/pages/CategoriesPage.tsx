@@ -4,6 +4,7 @@ import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { categoryService } from '../services/categoryService';
 import type { Category, CategoryFilters } from '@/types/category';
 import { CategoryList, CategoryForm, DeleteConfirmModal } from '../components';
+import { Button, Card } from '@/components/ui';
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -122,59 +123,59 @@ export default function CategoriesPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Categories</h1>
-          <p className="text-gray-600">Manage your product categories and subcategories</p>
+          <h1 className="text-3xl font-bold text-neutral-900">Categories</h1>
+          <p className="text-neutral-600 mt-2">Manage your product categories and subcategories</p>
         </div>
-          <button
-            onClick={handleCreateCategory}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
-          >
-            <PlusIcon className="w-5 h-5" />
-            Add Category
-          </button>
-        </div>
+        <Button
+          variant="primary"
+          onClick={handleCreateCategory}
+          icon={<PlusIcon className="h-5 w-5" />}
+        >
+          Add Category
+        </Button>
+      </div>
 
-        {/* Filters - Show only when not creating/editing */}
-        {!showForm && (
-          <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <div className="flex flex-wrap gap-4 items-center">
-              <div className="flex-1 min-w-64">
-                <div className="relative">
-                  <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search categories..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
+      {/* Filters - Show only when not creating/editing */}
+      {!showForm && (
+        <Card padding="md">
+          <div className="flex flex-wrap gap-4 items-center">
+            <div className="flex-1 min-w-64">
+              <div className="relative">
+                <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400" />
+                <input
+                  type="text"
+                  placeholder="Search categories..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white text-neutral-900 placeholder:text-neutral-400"
+                />
               </div>
-
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value as 'all' | 'active' | 'inactive')}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="all">All Status</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
-
-              <select
-                value={parentFilter}
-                onChange={(e) => setParentFilter(e.target.value as 'all' | 'parent' | 'subcategory')}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="all">All Categories</option>
-                <option value="parent">Parent Categories</option>
-                <option value="subcategory">Subcategories</option>
-              </select>
             </div>
+
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as 'all' | 'active' | 'inactive')}
+              className="px-4 py-2 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white text-neutral-900 text-sm"
+            >
+              <option value="all">All Status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+
+            <select
+              value={parentFilter}
+              onChange={(e) => setParentFilter(e.target.value as 'all' | 'parent' | 'subcategory')}
+              className="px-4 py-2 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white text-neutral-900 text-sm"
+            >
+              <option value="all">All Categories</option>
+              <option value="parent">Parent Categories</option>
+              <option value="subcategory">Subcategories</option>
+            </select>
           </div>
-        )}
+        </Card>
+      )}
 
       {/* Create/Edit Form - Show above the list when active */}
       {showForm && (
@@ -189,10 +190,10 @@ export default function CategoriesPage() {
       {!showForm && (
         <>
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-              <p className="font-medium">Error</p>
-              <p>{error}</p>
-            </div>
+            <Card variant="bordered" padding="md" className="bg-red-50 border-red-200">
+              <p className="font-semibold text-red-900">Error</p>
+              <p className="text-sm text-red-700 mt-1">{error}</p>
+            </Card>
           )}
 
           <CategoryList

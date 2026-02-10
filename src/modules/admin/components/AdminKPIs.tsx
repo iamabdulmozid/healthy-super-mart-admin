@@ -90,7 +90,7 @@ export default function AdminKPIs() {
             id="preset-select"
             value={selectedPreset}
             onChange={handlePresetChange}
-            className="border border-(--color-border) rounded-lg px-4 py-2 text-sm focus:outline-hidden focus:ring-3 focus:ring-primary-500/20 focus:border-primary-500 bg-white transition-all"
+            className="border border-neutral-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white transition-all"
             disabled={loading}
           >
             {presetOptions.map((option) => (

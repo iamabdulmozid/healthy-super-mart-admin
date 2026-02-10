@@ -69,7 +69,7 @@ export default function OrderTable({ orders, onOrderUpdate }: OrderTableProps) {
 
   return (
     <div className="overflow-x-auto max-w-full">
-      <table className="w-full bg-white border border-gray-200 table-fixed overflow-hidden rounded-lg">
+      <table className="w-full bg-white border border-neutral-200 table-fixed overflow-hidden rounded-lg">
         <colgroup>
           <col className="w-20" />
           <col className="w-28" />
@@ -170,7 +170,7 @@ export default function OrderTable({ orders, onOrderUpdate }: OrderTableProps) {
                     value={order.status}
                     onChange={(e) => handleStatusUpdate(order.id, e.target.value as 'pending' | 'confirmed' | 'shipped' | 'completed' | 'cancelled')}
                     disabled={updatingOrderId === order.id}
-                    className="text-xs border border-gray-300 rounded px-1 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                    className="text-xs border border-neutral-200 rounded px-1 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
                   >
                     <option value="pending">Pending</option>
                     <option value="confirmed">Confirmed</option>

@@ -224,8 +224,8 @@ export default function CategoryForm({ category, onClose, onSubmit }: CategoryFo
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border mb-6">
-      <div className="px-6 py-4 border-b border-gray-200">
+    <div className="bg-white rounded-lg shadow-sm border border-neutral-200 mb-6">
+      <div className="px-6 py-4 border-b border-neutral-200">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900">
             {isEditing ? 'Edit Category' : 'Create New Category'}
@@ -271,7 +271,7 @@ export default function CategoryForm({ category, onClose, onSubmit }: CategoryFo
                   required
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="block w-full px-4 py-3 border border-neutral-200 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   placeholder="Enter category name"
                 />
               </div>
@@ -287,7 +287,7 @@ export default function CategoryForm({ category, onClose, onSubmit }: CategoryFo
                   required
                   value={formData.slug}
                   onChange={handleInputChange}
-                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="block w-full px-4 py-3 border border-neutral-200 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   placeholder="category-slug"
                 />
               </div>
@@ -301,7 +301,7 @@ export default function CategoryForm({ category, onClose, onSubmit }: CategoryFo
                   name="parentCategoryId"
                   value={formData.parentCategoryId || ''}
                   onChange={handleInputChange}
-                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="block w-full px-4 py-3 border border-neutral-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                 >
                   <option value="">None (Root Category)</option>
                   {parentCategories
@@ -323,7 +323,7 @@ export default function CategoryForm({ category, onClose, onSubmit }: CategoryFo
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
-                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="block w-full px-4 py-3 border border-neutral-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                 >
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
@@ -341,7 +341,7 @@ export default function CategoryForm({ category, onClose, onSubmit }: CategoryFo
                   min="1"
                   value={formData.sortOrder}
                   onChange={handleInputChange}
-                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="block w-full px-4 py-3 border border-neutral-200 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                 />
               </div>
 
@@ -352,7 +352,7 @@ export default function CategoryForm({ category, onClose, onSubmit }: CategoryFo
                   name="isFeatured"
                   checked={formData.isFeatured}
                   onChange={handleInputChange}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-neutral-200 rounded"
                 />
                 <label htmlFor="isFeatured" className="ml-3 text-sm font-medium text-gray-700">
                   Featured Category
@@ -375,7 +375,7 @@ export default function CategoryForm({ category, onClose, onSubmit }: CategoryFo
                   rows={4}
                   value={formData.description}
                   onChange={handleInputChange}
-                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-y"
+                  className="block w-full px-4 py-3 border border-neutral-200 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-y"
                   placeholder="Enter category description..."
                 />
               </div>
@@ -401,7 +401,7 @@ export default function CategoryForm({ category, onClose, onSubmit }: CategoryFo
                       <img
                         src={previewImage}
                         alt="Category preview"
-                        className="w-32 h-32 object-cover rounded-lg border border-gray-200"
+                        className="w-32 h-32 object-cover rounded-lg border border-neutral-200"
                       />
                       <button
                         type="button"
@@ -413,7 +413,7 @@ export default function CategoryForm({ category, onClose, onSubmit }: CategoryFo
                       </button>
                     </div>
                   ) : (
-                    <div className="w-32 h-32 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+                    <div className="w-32 h-32 border-2 border-dashed border-neutral-200 rounded-lg flex items-center justify-center">
                       <PhotoIcon className="h-8 w-8 text-gray-400" />
                     </div>
                   )}
@@ -468,18 +468,18 @@ export default function CategoryForm({ category, onClose, onSubmit }: CategoryFo
                   id="seoKeywords"
                   value={formData.metadata?.seoKeywords?.join(', ') || ''}
                   onChange={handleKeywordsChange}
-                  className="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="block w-full px-4 py-3 border border-neutral-200 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   placeholder="keyword1, keyword2, keyword3"
                 />
               </div>
             </div>
           </div>
 
-          <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+          <div className="flex justify-end space-x-4 pt-6 border-t border-neutral-200">
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              className="px-6 py-3 border border-neutral-200 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
             >
               Cancel
             </button>

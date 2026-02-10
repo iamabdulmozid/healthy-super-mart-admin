@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { OrderService } from '../services/orderService';
 import OrderTable from '../components/OrderTable';
 import OrderFilters from '../components/OrderFilters';
+import { Card, CardContent } from '@/components/ui';
 import type { Order, OrderFilters as OrderFiltersType, OrderStats, OrdersResponse } from '@/types/order';
 
 export default function OrdersPage() {
@@ -102,11 +103,11 @@ export default function OrdersPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Orders</h1>
-          <p className="text-gray-600">Manage and track all orders from your POS and online store</p>
+          <h1 className="text-3xl font-bold text-neutral-900">Orders</h1>
+          <p className="text-neutral-600 mt-2">Manage and track all orders from your POS and online store</p>
         </div>
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
         </div>
       </div>
     );
@@ -116,18 +117,18 @@ export default function OrdersPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Orders</h1>
-          <p className="text-gray-600">Manage and track all orders from your POS and online store</p>
+          <h1 className="text-3xl font-bold text-neutral-900">Orders</h1>
+          <p className="text-neutral-600 mt-2">Manage and track all orders from your POS and online store</p>
         </div>
-        <div className="bg-red-50 border border-red-200 rounded-md p-4">
-          <div className="text-red-800">{error}</div>
+        <Card variant="bordered" padding="md" className="bg-red-50 border-red-200">
+          <div className="text-red-900">{error}</div>
           <button 
             onClick={() => fetchData(currentPage)}
-            className="mt-2 text-red-600 hover:text-red-800 underline"
+            className="mt-2 text-red-700 hover:text-red-900 font-medium underline"
           >
             Try Again
           </button>
-        </div>
+        </Card>
       </div>
     );
   }
@@ -136,28 +137,36 @@ export default function OrdersPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Orders</h1>
-        <p className="text-gray-600">Manage and track all orders from your POS and online store</p>
+        <h1 className="text-3xl font-bold text-neutral-900">Orders</h1>
+        <p className="text-neutral-600 mt-2">Manage and track all orders from your POS and online store</p>
       </div>
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-lg shadow-sm border">
-          <div className="text-2xl font-bold text-gray-900">{stats?.totalOrders || 0}</div>
-          <div className="text-sm text-gray-600">Total Orders</div>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow-sm border">
-          <div className="text-2xl font-bold text-blue-600">{stats?.todayOrders || 0}</div>
-          <div className="text-sm text-gray-600">Today's Orders</div>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow-sm border">
-          <div className="text-2xl font-bold text-yellow-600">{stats?.pendingOrders || 0}</div>
-          <div className="text-sm text-gray-600">Pending</div>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow-sm border">
-          <div className="text-2xl font-bold text-green-600">{stats?.completedOrders || 0}</div>
-          <div className="text-sm text-gray-600">Completed</div>
-        </div>
+        <Card padding="md">
+          <CardContent>
+            <div className="text-2xl font-bold text-neutral-900">{stats?.totalOrders || 0}</div>
+            <div className="text-sm text-neutral-600 mt-1">Total Orders</div>
+          </CardContent>
+        </Card>
+        <Card padding="md">
+          <CardContent>
+            <div className="text-2xl font-bold text-primary-600">{stats?.todayOrders || 0}</div>
+            <div className="text-sm text-neutral-600 mt-1">Today's Orders</div>
+          </CardContent>
+        </Card>
+        <Card padding="md">
+          <CardContent>
+            <div className="text-2xl font-bold text-yellow-600">{stats?.pendingOrders || 0}</div>
+            <div className="text-sm text-neutral-600 mt-1">Pending</div>
+          </CardContent>
+        </Card>
+        <Card padding="md">
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">{stats?.completedOrders || 0}</div>
+            <div className="text-sm text-neutral-600 mt-1">Completed</div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Filters */}
@@ -168,30 +177,30 @@ export default function OrdersPage() {
 
       {/* Results Summary */}
       <div className="flex justify-between items-center">
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-neutral-600">
           Showing {filteredOrders.length} of {ordersData?.total || 0} orders
         </p>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-neutral-600">
           Page {currentPage} of {ordersData?.totalPages || 1}
         </p>
       </div>
 
       {/* Orders Table */}
-      <div className="bg-white rounded-lg shadow-sm border">
+      <Card padding="none">
         <OrderTable 
           orders={filteredOrders}
           onOrderUpdate={handleOrderUpdate}
         />
-      </div>
+      </Card>
 
       {/* Pagination */}
       {ordersData && ordersData.totalPages > 1 && (
         <div className="flex justify-center">
-          <nav className="flex items-center space-x-2">
+          <nav className="flex items-center gap-2">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={!ordersData.hasPreviousPage}
-              className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-2 text-sm font-medium text-neutral-700 bg-white border border-neutral-200 rounded-lg hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Previous
             </button>
@@ -201,10 +210,10 @@ export default function OrdersPage() {
               <button
                 key={page}
                 onClick={() => handlePageChange(page)}
-                className={`px-3 py-2 text-sm font-medium rounded-md ${
+                className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                   page === currentPage
-                    ? 'text-blue-600 bg-blue-50 border border-blue-300'
-                    : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50'
+                    ? 'text-primary-700 bg-primary-50 border border-primary-200 font-semibold'
+                    : 'text-neutral-700 bg-white border border-neutral-200 hover:bg-neutral-50'
                 }`}
               >
                 {page}
@@ -214,7 +223,7 @@ export default function OrdersPage() {
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={!ordersData.hasNextPage}
-              className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-2 text-sm font-medium text-neutral-700 bg-white border border-neutral-200 rounded-lg hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Next
             </button>

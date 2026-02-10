@@ -47,7 +47,7 @@ export default function ProductFilters({ filters, onFiltersChange }: ProductFilt
   const hasActiveFilters = !!(filters.search || filters.categoryId || filters.status || filters.lowQuantity);
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm border mb-6">
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-neutral-200 mb-6">
       <div className="flex flex-col space-y-4">
         {/* Search Bar */}
         <div className="flex flex-col sm:flex-row gap-4">
@@ -61,7 +61,7 @@ export default function ProductFilters({ filters, onFiltersChange }: ProductFilt
                 placeholder="Search products..."
                 value={filters.search || ''}
                 onChange={(e) => handleFilterChange('search', e.target.value)}
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full pl-10 pr-3 py-2 border border-neutral-200 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
           </div>
@@ -69,7 +69,7 @@ export default function ProductFilters({ filters, onFiltersChange }: ProductFilt
           <div className="flex gap-2">
             <button
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="flex items-center px-3 py-2 border border-neutral-200 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               <FunnelIcon className="h-4 w-4 mr-2" />
               Filters
@@ -83,7 +83,7 @@ export default function ProductFilters({ filters, onFiltersChange }: ProductFilt
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="flex items-center px-3 py-2 border border-neutral-200 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
                 <XMarkIcon className="h-4 w-4 mr-2" />
                 Clear
@@ -104,7 +104,7 @@ export default function ProductFilters({ filters, onFiltersChange }: ProductFilt
                 <select
                   value={filters.categoryId || ''}
                   onChange={(e) => handleFilterChange('categoryId', e.target.value ? parseInt(e.target.value) : undefined)}
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="block w-full border-neutral-200 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
                 >
                   <option value="">All Categories</option>
                   {categories.map(category => (
@@ -123,7 +123,7 @@ export default function ProductFilters({ filters, onFiltersChange }: ProductFilt
                 <select
                   value={filters.status || ''}
                   onChange={(e) => handleFilterChange('status', e.target.value)}
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="block w-full border-neutral-200 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
                 >
                   <option value="">All Status</option>
                   <option value="active">Active</option>
@@ -139,7 +139,7 @@ export default function ProductFilters({ filters, onFiltersChange }: ProductFilt
                 <select
                   value={filters.lowQuantity ? 'low' : ''}
                   onChange={(e) => handleFilterChange('lowQuantity', e.target.value === 'low')}
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="block w-full border-neutral-200 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
                 >
                   <option value="">All Stock Levels</option>
                   <option value="low">Low Quantity (&lt; 10)</option>
@@ -154,7 +154,7 @@ export default function ProductFilters({ filters, onFiltersChange }: ProductFilt
                 <select
                   value={filters.sortBy || 'name'}
                   onChange={(e) => handleFilterChange('sortBy', e.target.value)}
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="block w-full border-neutral-200 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
                 >
                   <option value="name">Name</option>
                   <option value="createdAt">Date Created</option>
@@ -172,7 +172,7 @@ export default function ProductFilters({ filters, onFiltersChange }: ProductFilt
                 <select
                   value={filters.sortOrder || 'ASC'}
                   onChange={(e) => handleFilterChange('sortOrder', e.target.value)}
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="block w-full border-neutral-200 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
                 >
                   <option value="ASC">Ascending</option>
                   <option value="DESC">Descending</option>
@@ -187,7 +187,7 @@ export default function ProductFilters({ filters, onFiltersChange }: ProductFilt
                 <select
                   value={filters.limit || 10}
                   onChange={(e) => handleFilterChange('limit', parseInt(e.target.value))}
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="block w-full border-neutral-200 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
                 >
                   <option value={5}>5</option>
                   <option value={10}>10</option>

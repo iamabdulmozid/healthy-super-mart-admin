@@ -46,7 +46,7 @@ export default function CategoryList({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border">
+      <div className="bg-white rounded-lg shadow-sm border border-neutral-200">
         <div className="p-8 text-center">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           <p className="mt-4 text-gray-600">Loading categories...</p>
@@ -68,7 +68,7 @@ export default function CategoryList({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+    <div className="bg-white rounded-lg shadow-sm border border-neutral-200 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -159,7 +159,7 @@ export default function CategoryList({
 
       {/* Pagination */}
       {pagination.totalPages > 1 && (
-        <div className="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
+        <div className="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-neutral-200">
           <div className="text-sm text-gray-700">
             Showing {((pagination.currentPage - 1) * pagination.limit) + 1} to{' '}
             {Math.min(pagination.currentPage * pagination.limit, pagination.total)} of{' '}
@@ -169,7 +169,7 @@ export default function CategoryList({
             <button
               onClick={() => onPageChange(pagination.currentPage - 1)}
               disabled={pagination.currentPage === 1}
-              className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-neutral-200 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <ChevronLeftIcon className="h-5 w-5" />
             </button>
@@ -181,7 +181,7 @@ export default function CategoryList({
                 className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
                   page === pagination.currentPage
                     ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
-                    : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                    : 'bg-white border-neutral-200 text-gray-500 hover:bg-gray-50'
                 }`}
               >
                 {page}
@@ -191,7 +191,7 @@ export default function CategoryList({
             <button
               onClick={() => onPageChange(pagination.currentPage + 1)}
               disabled={pagination.currentPage === pagination.totalPages}
-              className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-neutral-200 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <ChevronRightIcon className="h-5 w-5" />
             </button>

@@ -16,7 +16,7 @@ export default function OrderFilters({ filters, onFiltersChange }: OrderFiltersP
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm border mb-6">
+    <div className="bg-white p-6 rounded-lg shadow-sm border border-neutral-200 mb-6">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Search Input */}
         <div className="md:col-span-2">
@@ -33,7 +33,7 @@ export default function OrderFilters({ filters, onFiltersChange }: OrderFiltersP
               placeholder="Search by order ID, shop name, or product..."
               value={filters.search}
               onChange={(e) => handleFilterChange('search', e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              className="block w-full pl-10 pr-3 py-2 border border-neutral-200 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
         </div>
@@ -47,7 +47,7 @@ export default function OrderFilters({ filters, onFiltersChange }: OrderFiltersP
             id="orderSource"
             value={filters.orderSource}
             onChange={(e) => handleFilterChange('orderSource', e.target.value)}
-            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+            className="block w-full px-3 py-2 border border-neutral-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="">All Sources</option>
             <option value="pos">POS</option>
@@ -64,7 +64,7 @@ export default function OrderFilters({ filters, onFiltersChange }: OrderFiltersP
             id="status"
             value={filters.status}
             onChange={(e) => handleFilterChange('status', e.target.value)}
-            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+            className="block w-full px-3 py-2 border border-neutral-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="">All Statuses</option>
             <option value="Pending">Pending</option>

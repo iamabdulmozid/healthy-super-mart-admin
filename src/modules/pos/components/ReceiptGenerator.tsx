@@ -191,7 +191,7 @@ export default function ReceiptGenerator({ order, onClose, compact = false }: Re
       {isModalOpen && (
         <div className="fixed inset-0 z-40 flex items-center justify-center p-4 pointer-events-none">
           {/* Centered receipt card */}
-          <div className="relative bg-white rounded-lg shadow-2xl border border-gray-300 w-96 max-h-[85vh] flex flex-col animate-in zoom-in-95 duration-200 pointer-events-auto">
+          <div className="relative bg-white rounded-lg shadow-2xl border border-neutral-200 w-96 max-h-[85vh] flex flex-col animate-in zoom-in-95 duration-200 pointer-events-auto">
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b bg-gray-50 rounded-t-lg">
               <h3 className="text-lg font-semibold text-gray-800">Receipt Preview</h3>

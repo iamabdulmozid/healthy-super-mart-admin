@@ -181,7 +181,7 @@ export default function CheckoutButton() {
       )}
 
       {/* Compact Payment & Checkout Section */}
-      <div className="bg-white border border-gray-200 rounded-lg p-4">
+      <div className="bg-white border border-neutral-200 rounded-lg p-4">
         {/* Payment Method Selection */}
         <div className="flex gap-2 mb-3">
           <button
@@ -190,7 +190,7 @@ export default function CheckoutButton() {
             className={`flex-1 p-2 rounded-md border transition-all duration-200 flex items-center justify-center gap-1.5 text-sm font-medium ${
               paymentMethod === 'cash'
                 ? 'border-green-500 bg-green-50 text-green-700'
-                : 'border-gray-200 bg-gray-50 text-gray-600 hover:border-gray-300 hover:bg-gray-100'
+                : 'border-neutral-200 bg-gray-50 text-gray-600 hover:border-neutral-200 hover:bg-gray-100'
             }`}
           >
             <span>💵</span>
@@ -203,7 +203,7 @@ export default function CheckoutButton() {
             className={`flex-1 p-2 rounded-md border transition-all duration-200 flex items-center justify-center gap-1.5 text-sm font-medium ${
               paymentMethod === 'card'
                 ? 'border-blue-500 bg-blue-50 text-blue-700'
-                : 'border-gray-200 bg-gray-50 text-gray-600 hover:border-gray-300 hover:bg-gray-100'
+                : 'border-neutral-200 bg-gray-50 text-gray-600 hover:border-neutral-200 hover:bg-gray-100'
             }`}
           >
             <span>💳</span>
@@ -224,7 +224,7 @@ export default function CheckoutButton() {
                   onChange={(e) => setReceivedAmount(e.target.value)}
                   placeholder={`Enter amount (min: ${formatPrice(cart.totalAmount)})`}
                   disabled={isLoading}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  className="w-full px-3 py-2 border border-neutral-200 rounded-md text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 />
               </div>
               {receivedAmount && parseFloat(receivedAmount) >= cart.totalAmount && (
