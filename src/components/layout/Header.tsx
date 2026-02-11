@@ -1,10 +1,9 @@
 // src/components/layout/Header.tsx
 import { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { 
   Bars3Icon, 
-  ChevronDoubleLeftIcon, 
-  ChevronDoubleRightIcon,
   ArrowLeftStartOnRectangleIcon,
   UserCircleIcon,
   ChevronDownIcon
@@ -12,14 +11,34 @@ import {
 
 interface HeaderProps {
   onMenuClick: () => void;
-  onToggleSidebarCollapse: () => void;
-  isSidebarCollapsed: boolean;
 }
 
-export default function Header({ onMenuClick, onToggleSidebarCollapse, isSidebarCollapsed }: HeaderProps) {
+export default function Header({ onMenuClick }: HeaderProps) {
   const { admin, logout } = useAuth();
+  const location = useLocation();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Get page title based on current route
+  const getPageTitle = (): string => {
+    const path = location.pathname;
+    
+    if (path === '/dashboard') return 'Dashboard';
+    if (path === '/orders') return 'Orders';
+    if (path === '/products') return 'Products';
+    if (path === '/categories') return 'Categories';
+    if (path === '/users') return 'Users';
+    if (path === '/reports') return 'Reports';
+    if (path === '/pos') return 'Point of Sale';
+    if (path.startsWith('/accounts')) {
+      if (path === '/accounts/summary') return 'Day Summary';
+      if (path === '/accounts/transactions') return 'Transactions';
+      if (path === '/accounts/withdraw') return 'Withdraw';
+      return 'Accounts';
+    }
+    
+    return 'Healthy Super Mart';
+  };
 
   const handleLogout = () => {
     if (window.confirm('Are you sure you want to log out?')) {
@@ -60,27 +79,11 @@ export default function Header({ onMenuClick, onToggleSidebarCollapse, isSidebar
               <Bars3Icon className="h-6 w-6" />
             </button>
 
-            {/* Desktop collapse button */}
-            <button
-              onClick={onToggleSidebarCollapse}
-              className="hidden lg:flex p-2 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors"
-              aria-label="Toggle sidebar"
-            >
-              {isSidebarCollapsed ? (
-                <ChevronDoubleRightIcon className="h-5 w-5" />
-              ) : (
-                <ChevronDoubleLeftIcon className="h-5 w-5" />
-              )}
-            </button>
-
-            {/* Brand name - visible on all screens */}
+            {/* Menu name - dynamic based on Selected menu */}
             <div className="flex flex-col">
               <h1 className="text-base sm:text-lg font-semibold text-neutral-900 leading-tight">
-                Healthy Super Mart
+                {getPageTitle()}
               </h1>
-              <p className="text-[10px] sm:text-xs text-neutral-500 leading-tight">
-                Admin Dashboard
-              </p>
             </div>
           </div>
 

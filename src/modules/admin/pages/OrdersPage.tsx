@@ -103,8 +103,7 @@ export default function OrdersPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-neutral-900">Orders</h1>
-          <p className="text-neutral-600 mt-2">Manage and track all orders from your POS and online store</p>
+          <p className="text-neutral-600">Manage and track all orders from your POS and online store</p>
         </div>
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
@@ -117,8 +116,7 @@ export default function OrdersPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-neutral-900">Orders</h1>
-          <p className="text-neutral-600 mt-2">Manage and track all orders from your POS and online store</p>
+          <p className="text-neutral-600">Manage and track all orders from your POS and online store</p>
         </div>
         <Card variant="bordered" padding="md" className="bg-red-50 border-red-200">
           <div className="text-red-900">{error}</div>
@@ -137,8 +135,7 @@ export default function OrdersPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-neutral-900">Orders</h1>
-        <p className="text-neutral-600 mt-2">Manage and track all orders from your POS and online store</p>
+        <p className="text-neutral-600">Manage and track all orders from your POS and online store</p>
       </div>
 
       {/* Statistics Cards */}

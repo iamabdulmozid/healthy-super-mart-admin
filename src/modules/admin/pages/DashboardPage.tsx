@@ -8,8 +8,7 @@ export default function DashboardPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-neutral-900">Dashboard</h1>
-        <p className="text-neutral-600 mt-2">Monitor your store's performance and key metrics</p>
+        <p className="text-neutral-600">Monitor your store's performance and key metrics</p>
       </div>
 
       {/* KPIs Section */}

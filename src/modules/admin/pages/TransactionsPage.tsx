@@ -71,8 +71,7 @@ export default function TransactionsPage() {
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-bold text-neutral-900">Transactions</h1>
-        <p className="text-neutral-600 mt-2">
+        <p className="text-neutral-600">
           View and manage all your cashbook transactions
         </p>
       </div>

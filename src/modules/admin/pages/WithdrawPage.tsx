@@ -104,8 +104,7 @@ export default function WithdrawPage() {
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-bold text-neutral-900">Withdraw Cash</h1>
-        <p className="text-neutral-600 mt-2">
+        <p className="text-neutral-600">
           Record a cash withdrawal from the register
         </p>
       </div>

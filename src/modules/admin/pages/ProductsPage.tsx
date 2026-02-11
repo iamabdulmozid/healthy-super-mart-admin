@@ -160,8 +160,7 @@ export default function ProductsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-neutral-900">Products</h1>
-          <div className="flex items-center gap-2 mt-2">
+          <div className="flex items-center">
             {filters.lowQuantity ? (
               <Badge variant="warning">
                 {pagination.total} low stock {pagination.total === 1 ? 'item' : 'items'}
